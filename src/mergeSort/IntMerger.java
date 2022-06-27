@@ -10,7 +10,7 @@ public class IntMerger {
         this.inversions = 0;
     }
     
-    IntMerger(int[] fullArray, int inversions){
+    IntMerger(int[] fullArray, long inversions){
         this.fullArray = fullArray;
         this.inversions = inversions;
     }
