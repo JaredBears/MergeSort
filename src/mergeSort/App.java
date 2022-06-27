@@ -1,93 +1,36 @@
 package mergeSort;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("src/resources/int_list.txt");
+        Scanner sc = new Scanner(file);
         
-        int[] numArray = toArray(sc.nextLong());
+        int counter = 1;
+        int[] numArray = new int[1];
         
-        int[] sortedArray = mergeSort(numArray);
-
-        System.out.println(Arrays.toString(sortedArray));
+        while(sc.hasNextLine()) {
+            if(counter == 1) {
+                numArray = new int[Integer.parseInt(sc.nextLine())];
+            } else {
+                numArray[counter-2] =  Integer.parseInt(sc.nextLine());
+            }
+            counter++;
+        }
+        
+        IntMerger sortArray = new IntMerger(numArray);
+        sortArray = Merger.mergeSort(sortArray);
+        
+        System.out.println(Arrays.toString(sortArray.fullArray));
+        System.out.println(sortArray.inversions);
         
         sc.close();
 
-    }
-
-    private static int[] mergeSort(int[] numArray) {
-        int[] result = new int[numArray.length];
-        /*
-         * base case if there are two or fewer entries
-         */
-        if(numArray.length == 2) {
-            if(numArray[1] > numArray[0]) {
-                return numArray;
-            } else {
-                result[0] = numArray[1];
-                result[1] = numArray[0];
-                return result;
-            }
-            
-        } else if(numArray.length <= 1) {
-            return numArray;
-        }
-        
-        /*
-         * split array into two roughly even arrays
-         */
-        int half = numArray.length/2;
-        
-        int[] firstHalf = new int[half];
-        int[] secondHalf = new int[half + numArray.length%2];
-        
-        for(int i = 0; i < numArray.length; i++) {
-            if(i < half) {
-                firstHalf[i] = numArray[i];
-            } else {
-                secondHalf[i - half] = numArray[i];
-            }
-        }
-        
-        /*
-         * recursive sorting calls
-         */
-        int[] sortedFirst = mergeSort(firstHalf);
-        int[] sortedSecond = mergeSort(secondHalf);
-        
-        /*
-         * merging
-         */
-        int firstCount = 0;
-        int secondCount = 0;
-        
-        for(int i = 0; i < result.length; i++) {
-            if (firstCount >= sortedFirst.length && secondCount < sortedSecond.length) {
-                result[i] = sortedSecond[secondCount++];
-            } else if (firstCount < sortedFirst.length && secondCount >= sortedSecond.length) {
-                result[i] = sortedFirst[firstCount++];
-            } else if(sortedFirst[firstCount] <= sortedSecond[secondCount]) {
-                result[i] = sortedFirst[firstCount++];
-            } else {
-                result[i] = sortedSecond[secondCount++];
-            }
-        }
-        
-        return result;
-    }
-
-    private static int[] toArray(long x) {
-        String xString = Long.toString(x);
-        int[] result = new int[xString.length()];
-        
-        for(int i = 0; i < xString.length(); i++) {
-            result[i] = Character.getNumericValue(xString.charAt(i));
-        }
-        
-        return result;
     }
 
 }
