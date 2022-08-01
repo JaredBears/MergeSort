@@ -23,11 +23,17 @@ public class App {
             counter++;
         }
         
-        IntMerger sortArray = new IntMerger(numArray);
-        sortArray = Merger.mergeSort(sortArray);
+        IntMerger mergeSortArray = new IntMerger(numArray);
+        mergeSortArray = Merger.mergeSort(mergeSortArray);
         
-        System.out.println(Arrays.toString(sortArray.fullArray));
-        System.out.println(sortArray.inversions);
+        IntMerger quickSortArray = new IntMerger(numArray);
+        QuickSort.quickSort(quickSortArray);
+        
+        //System.out.println(Arrays.toString(mergeSortArray.fullArray));
+        System.out.println("Merge Sort Inversions: " + mergeSortArray.inversions);
+        
+        System.out.println(Arrays.toString(quickSortArray.fullArray));
+        System.out.println("Quick Sort Comparisons: " + quickSortArray.comparisons);
         
         sc.close();
 
