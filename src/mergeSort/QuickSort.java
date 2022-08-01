@@ -15,7 +15,7 @@ public class QuickSort {
   public static void quickSort(IntMerger quickSortArray, int l, int r) {
     if(l < r) {
       int index = partition(quickSortArray, l, r);
-      quickSort(quickSortArray, l, index-1);
+      quickSort(quickSortArray, l, index);
       quickSort(quickSortArray, index+1, r);
     }
     
@@ -52,10 +52,10 @@ public class QuickSort {
   private static int choosePivot(IntMerger quickSortArray, int l, int r) {
     int middle = ((r - l) / 2) + ((r - l) % 2);
     
-    if((middle > r && middle < l) || (middle > l && middle < r)) {
+    if((quickSortArray.fullArray[middle] > quickSortArray.fullArray[r-1] && quickSortArray.fullArray[middle] < quickSortArray.fullArray[l]) || (quickSortArray.fullArray[middle] > quickSortArray.fullArray[l] && quickSortArray.fullArray[middle] < quickSortArray.fullArray[r-1])) {
       return middle;
-    } else if((r > middle && r < l) || (r < middle && r > l)) {
-      return r;
+    } else if((quickSortArray.fullArray[r-1] > quickSortArray.fullArray[middle] && quickSortArray.fullArray[r-1] < quickSortArray.fullArray[l]) || (quickSortArray.fullArray[r-1] < quickSortArray.fullArray[middle] && quickSortArray.fullArray[r-1] > quickSortArray.fullArray[l])) {
+      return r-1;
     } else {
       return l;
     }
